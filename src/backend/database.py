@@ -27,7 +27,17 @@ def init_database():
 
     activities_collection.update_one(
         {"_id": "Manga Maniacs"},
-        {"$setOnInsert": initial_activities["Manga Maniacs"]},
+        {
+            "$set": {
+                "schedule": initial_activities["Manga Maniacs"]["schedule"],
+                "schedule_details": initial_activities["Manga Maniacs"]["schedule_details"],
+                "max_participants": initial_activities["Manga Maniacs"]["max_participants"]
+            },
+            "$setOnInsert": {
+                "description": initial_activities["Manga Maniacs"]["description"],
+                "participants": initial_activities["Manga Maniacs"]["participants"]
+            }
+        },
         upsert=True
     )
             
@@ -40,12 +50,12 @@ def init_database():
 initial_activities = {
     "Manga Maniacs": {
         "description": "Dive into the vibrant worlds of Japanese manga! Discover unforgettable characters, epic adventures, and stories worth sharing with fellow fans.",
-        "schedule": "Tuesdays, 7:00 PM",
+        "schedule": "Tuesdays, 5:00 PM",
         "schedule_details": {
             "days": ["Tuesday"],
-            "start_time": "19:00"
+            "start_time": "17:00"
         },
-        "max_participants": 15,
+        "max_participants": 25,
         "participants": []
     },
     "Chess Club": {
